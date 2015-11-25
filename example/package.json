@@ -1,0 +1,27 @@
+{
+  "name": "redux-router-example",
+  "private": true,
+  "dependencies": {
+    "path-to-regexp": "^1.2.1",
+    "query-string": "^3.0.0",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.4",
+    "redux-thunk": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.2.0",
+    "babel-plugin-transform-object-rest-spread": "^6.1.18",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.1",
+    "watchify": "^3.6.1"
+  },
+  "scripts": {
+    "build": "browserify --extension=.jsx -t babelify client.js -o bundled.js",
+    "watch": "watchify --extension=.jsx -t babelify client.js -o bundled.js",
+    "start": "babel-node server.js"
+  }
+}

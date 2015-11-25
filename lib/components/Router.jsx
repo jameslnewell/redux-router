@@ -1,6 +1,8 @@
 import React from 'react';
 import RouteContext from './RouteContext';
 
+import match from '../match';
+
 /**
  * Extract the route data
  * @param   {object} elements
@@ -27,16 +29,59 @@ const defaultRoute = {
   params: {}
 };
 
-class Router extends React.Component {
+class Router extends React.Component { //TODO: connect the form here
+
+  constructor(...args) {
+    super(...args);
+
+    //initialise the location
+    if (this.props.location) {
+      this.location = this.props.location;
+    }
+
+    this.handleLocationChange = this.handleLocationChange.bind(this);
+  }
+
+  componentWillMount() {
+
+    //start listening for location changes
+    if (this.location) {
+      this.location
+        .register()
+        .on('changed', this.handleLocationChange)
+      ;
+    }
+
+  }
+
+  componentWillUnmount() {
+
+    //stop listening for location changes
+    if (this.location) {
+      this.location
+        .off('changed', this.handleLocationChange)
+        .unregister()
+      ;
+    }
+
+  }
+
+  getRoutes() {
+    return []
+      .concat(extract(this.props.children))
+      .concat(extract(this.props.routes))
+    ;
+  }
+
+  handleLocationChange(url) {
+    console.log(match(url, this.getRoutes())); //TODO: dispatch here
+  }
 
   render() {
     const {route} = this.props;
 
     //extract the routes
-    const routes = []
-      .concat(extract(this.props.children))
-      .concat(extract(this.props.routes))
-    ;
+    const routes = this.getRoutes();
 
     //find the handler (by name) for the current route
     const handler = route ? routes.reduce((found, nextRoute) => {
@@ -63,7 +108,8 @@ Router.propTypes = {
     params: React.PropTypes.object
   }),
   routes: React.PropTypes.node,
-  children: React.PropTypes.node
+  children: React.PropTypes.node,
+  location: React.PropTypes.object
 };
 
 Router.defaultProps = {

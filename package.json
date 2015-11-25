@@ -2,10 +2,12 @@
   "name": "redux-router",
   "version": "1.0.0",
   "dependencies": {
-    "invariant": "^2.2.0"
+    "invariant": "^2.2.0",
+    "path-to-regexp": "^1.2.1",
+    "query-string": "^3.0.0",
+    "react": "^0.14.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.2.0",
     "babel-core": "^6.2.1",
     "babel-plugin-transform-object-rest-spread": "^6.1.18",
     "babel-preset-es2015": "^6.1.18",
@@ -24,7 +26,6 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require test/_.js",
-    "test.watch": "mocha --compilers js:babel-core/register --require test/_.js --watch",
-    "example": "babel-node example/index.js"
+    "test.watch": "mocha --compilers js:babel-core/register --require test/_.js --watch"
   }
 }
